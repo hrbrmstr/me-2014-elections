@@ -3,7 +3,7 @@ library(ggplot2)
 library(jsonlite)
 library(gridExtra)
 
-me <- readOGR("/Users/bob/Desktop/me/towns", "towns")
+me <- readOGR("towns", "towns")
 
 me_map <- fortify(me)
 me_map <- merge(me_map, data.frame(id=rownames(me@data), TOWN=me@data$TOWN, COUNTY=me@data$COUNTY), all.x=TRUE)
@@ -19,6 +19,12 @@ mrg <- do.call(rbind, lapply(f20646[[1]]$candidates, function(x) {
 }))
 mrg$TOWN <- rownames(mrg)
 rownames(mrg) <- NULL
+
+# Some errant towns/voting townships...i corrected most of them
+# [1] "Oxford Cty Townships"     "Penobscot Cty Townships"  "Penobscot Nation Vot Dst" "Owl's Head"               "Old Orchrd Bch"
+# [6] "Piscataquis Cty Townshps" "Pleasant Point Votng Dst" "Monhegan Plt."            "Washington Cty Townships" "Verona"
+# [11] "Westport"                 "Somerset Cty Townships"   "Aroostook Cty Townships"  "Indian Township Vtng Dst" "Isle Au Haut"
+# [16] "Hancock Cty Townships"    "LaGrange"                 "Grand Lake Stream Plt"    "Franklin Cty Townships"   "Maine"
 
 mrg[mrg$TOWN == "Owl's Head",]$TOWN <- "Owls Head"
 mrg[mrg$TOWN == "Old Orchrd Bch",]$TOWN <- "Old Orchard Bch"
@@ -88,7 +94,6 @@ gg <- gg + theme(legend.position=c(0.65, 0.1),
 gg_ind <- gg
 
 
-png(file="/Users/bob/Desktop/gub.png", width=1200, height=600, bg="gray")
+png(file="gub.png", width=1200, height=600, bg="gray")
 grid.arrange(gg_rvb, gg_margin, gg_ind, ncol=3, main="2014 Maine Gubernatorial Race")
 dev.off()
-system("open ~/Desktop/gub.png")

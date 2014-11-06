@@ -3,7 +3,7 @@ library(ggplot2)
 library(jsonlite)
 library(gridExtra)
 
-me <- readOGR("/Users/bob/Desktop/me/towns", "towns")
+me <- readOGR("towns", "towns")
 
 me_map <- fortify(me)
 me_map <- merge(me_map, data.frame(id=rownames(me@data), TOWN=me@data$TOWN, COUNTY=me@data$COUNTY), all.x=TRUE)
