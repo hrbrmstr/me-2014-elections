@@ -94,6 +94,6 @@ gg <- gg + theme(legend.position=c(0.65, 0.1),
 gg_ind <- gg
 
 
-png(file="gub.png", width=1200, height=600, bg="gray")
+svg(file="gub.svg", width=12, height=6, bg="gray")
 grid.arrange(gg_rvb, gg_margin, gg_ind, ncol=3, main="2014 Maine Gubernatorial Race")
 dev.off()
